@@ -1,0 +1,48 @@
+@if (conferences.length === 0) {
+
+    <p>Aucune conférence disponible.</p>
+  
+  } @else {
+  
+    @for (conference of conferences; track conference.title) {
+  
+      @if (isUpcoming(conference.date)) {
+  
+        <div class="conference">
+  
+          <h2>{{ conference.title | uppercase }}</h2>
+  
+          <p>{{ conference.description }}</p>
+  
+          <p>
+            Date :
+            {{ conference.date | date:'dd/MM/yyyy' }}
+          </p>
+  
+          <p>
+            Lieu :
+            {{ conference.place }}
+          </p>
+  
+          <p>
+            Places disponibles :
+            {{ conference.maxParticipants - conference.nbParticipants }}
+          </p>
+  
+          @let places = conference.maxParticipants - conference.nbParticipants;
+            <button
+                [class.green]="places >= 10"
+                [class.orange]="places > 0 && places < 10"
+                [class.red]="places === 0">
+
+                S'inscrire
+
+            </button>
+  
+        </div>
+  
+      }
+  
+    }
+  
+  }
