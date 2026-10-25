@@ -2,7 +2,7 @@
   <p>Aucune conférence disponible.</p>
 } @else {
   <div class="conference-grid">
-    @for (conference of conferenceService.conferences(); track conference.title) {
+    @for (conference of conferenceService.conferences(); track conference.id) {
       @if (isUpcoming(conference.date)) {
         @let places = conference.maxParticipants - conference.nbParticipants;
         @let booked = bookingService.isBooked(conference.title);
@@ -35,12 +35,12 @@
                 {{ places === 0 ? 'Complet' : "S'inscrire" }}
               </button>
             }
-            <button
-              type="button"
+            <a
+              [routerLink]="['/conferences', conference.id]"
               class="btn-detail"
-              (click)="selectConference(conference)">
+              (click)="$event.stopPropagation()">
               Voir détails
-            </button>
+            </a>
           </div>
         </div>
       }

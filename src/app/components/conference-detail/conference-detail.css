@@ -1,0 +1,77 @@
+.detail-card {
+  max-width: 600px;
+  margin: 1.5rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.detail-card h2 {
+  color: #1e293b;
+  margin-top: 0;
+}
+
+.desc {
+  font-size: 1.1rem;
+  color: #475569;
+  margin-bottom: 1.5rem;
+}
+
+.detail-meta p {
+  margin: 0.5rem 0;
+  color: #334155;
+}
+
+.detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-book {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background-color: #dc2626;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-back {
+  color: #475569;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.btn-back:hover {
+  background-color: #f1f5f9;
+}
+
+.status-booked {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+}

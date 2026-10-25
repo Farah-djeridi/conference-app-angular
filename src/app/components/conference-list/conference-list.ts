@@ -1,19 +1,20 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { UpperCasePipe, DatePipe } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { Conference } from '../../models/conference.model';
 import { ConferenceService } from '../../services/conference.service';
 import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-conference-list',
-  imports: [UpperCasePipe, DatePipe],
+  imports: [UpperCasePipe, DatePipe, RouterLink],
   templateUrl: './conference-list.html',
   styleUrl: './conference-list.css',
 })
 export class ConferenceList {
-  // Injection moderne via inject()
   readonly conferenceService = inject(ConferenceService);
   readonly bookingService = inject(BookingService);
+  private readonly router = inject(Router);
 
   @Output()
   conferenceSelected = new EventEmitter<Conference>();
@@ -30,7 +31,13 @@ export class ConferenceList {
 
   book(conference: Conference, event?: Event): void {
     event?.stopPropagation();
-    this.bookingService.bookConference(conference);
+    const success = this.bookingService.bookConference(conference);
+    if (success) {
+      // Navigation programmée automatique vers la confirmation
+      this.router.navigate(['/confirmation'], {
+        queryParams: { conferenceId: conference.id },
+      });
+    }
   }
 
   cancel(conferenceTitle: string, event?: Event): void {

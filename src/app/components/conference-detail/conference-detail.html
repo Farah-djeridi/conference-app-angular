@@ -1,15 +1,39 @@
-@if (conference) {
+@if (currentConference(); as conf) {
+  @let places = conf.maxParticipants - conf.nbParticipants;
+  @let isBooked = bookingService.isBooked(conf.title);
 
-    <h2>{{ conference.title }}</h2>
-  
-    <p>{{ conference.description }}</p>
-  
-    <p>{{ conference.date }}</p>
-  
-    <p>{{ conference.place }}</p>
-  
-  } @else {
-  
-    <p>Sélectionnez une conférence.</p>
-  
-  }
+  <div class="detail-card">
+    <h2>{{ conf.title | uppercase }}</h2>
+    <p class="desc">{{ conf.description }}</p>
+
+    <div class="detail-meta">
+      <p><strong>📅 Date :</strong> {{ conf.date | date:'dd/MM/yyyy' }}</p>
+      <p><strong>📍 Lieu :</strong> {{ conf.place }}</p>
+      <p><strong>👥 Places restantes :</strong> {{ places }} / {{ conf.maxParticipants }}</p>
+    </div>
+
+    <div class="detail-actions">
+      @if (isBooked) {
+        <span class="status-booked">✔ Vous êtes inscrit à cette conférence</span>
+        <button type="button" class="btn-cancel" (click)="cancel()">
+          Annuler l'inscription
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="btn-book"
+          [disabled]="places === 0"
+          (click)="book()">
+          {{ places === 0 ? 'Complet' : "Confirmer mon inscription" }}
+        </button>
+      }
+
+      <a routerLink="/conferences" class="btn-back">⬅ Retour au catalogue</a>
+    </div>
+  </div>
+} @else {
+  <div class="empty-state">
+    <p>Aucune conférence trouvée pour cet identifiant.</p>
+    <a routerLink="/conferences" class="btn-back">Voir toutes les conférences</a>
+  </div>
+}

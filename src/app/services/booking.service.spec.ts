@@ -8,6 +8,7 @@ describe('BookingService', () => {
   let conferenceService: ConferenceService;
 
   const mockConference: Conference = {
+    id: 'conf-1',
     title: 'Angular 21',
     description: 'Test conference',
     date: '2026-11-10',

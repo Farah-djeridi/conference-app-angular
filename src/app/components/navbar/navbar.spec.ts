@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Navbar } from './navbar';
 import { BookingService } from '../../services/booking.service';
 import { Conference } from '../../models/conference.model';
@@ -11,6 +12,7 @@ describe('Navbar', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Navbar],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     bookingService = TestBed.inject(BookingService);
@@ -25,6 +27,7 @@ describe('Navbar', () => {
 
   it('should reflect bookedCount from BookingService', async () => {
     const mockConf: Conference = {
+      id: 'conf-1',
       title: 'Angular 21',
       description: 'Desc',
       date: '2026-11-10',

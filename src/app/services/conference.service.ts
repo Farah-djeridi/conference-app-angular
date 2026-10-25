@@ -7,6 +7,7 @@ import { Conference } from '../models/conference.model';
 export class ConferenceService {
   private readonly conferencesSignal = signal<Conference[]>([
     {
+      id: 'conf-1',
       title: 'Angular 21',
       description: 'Découvrir Angular 21 et les Signals réactifs',
       date: '2026-11-10',
@@ -15,6 +16,7 @@ export class ConferenceService {
       nbParticipants: 70,
     },
     {
+      id: 'conf-2',
       title: 'Développement Web Moderne',
       description: 'Les nouvelles technologies web et le SSR',
       date: '2026-11-15',
@@ -23,6 +25,7 @@ export class ConferenceService {
       nbParticipants: 45,
     },
     {
+      id: 'conf-3',
       title: 'Architecture Micro-Frontend',
       description: 'Modularité et scalabilité des grandes applications',
       date: '2026-12-01',
@@ -41,6 +44,12 @@ export class ConferenceService {
     today.setHours(0, 0, 0, 0);
     return this.conferencesSignal().filter((c) => new Date(c.date) >= today);
   });
+
+  /** Recherche une conférence par son identifiant unique */
+  getConferenceById(id?: string | null): Conference | undefined {
+    if (!id) return undefined;
+    return this.conferencesSignal().find((c) => c.id === id);
+  }
 
   /**
    * Réserve une place dans le catalogue en incrémentant nbParticipants

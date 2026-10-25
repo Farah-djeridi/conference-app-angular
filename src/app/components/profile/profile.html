@@ -1,5 +1,29 @@
-<section>
-    <h2>Profil utilisateur</h2>
-    <p>Nom : Farah</p>
-    <p>Email : farah@example.com</p>
+<div class="profile-page">
+  <section class="profile-card">
+    <h2>👤 Mon Profil</h2>
+    <p><strong>Nom :</strong> Farah</p>
+    <p><strong>Email :</strong> farah&#64;example.com</p>
+
+    <div class="user-bookings">
+      <h3>Mes Conférences Réservées ({{ bookingService.bookedCount() }})</h3>
+      @if (bookingService.bookedConferences().length === 0) {
+        <p class="empty-note">Vous n'avez pas encore réservé de conférence.</p>
+        <a routerLink="/conferences" class="btn-browse">Explorer le catalogue</a>
+      } @else {
+        <ul>
+          @for (conf of bookingService.bookedConferences(); track conf.id) {
+            <li>
+              <span><strong>{{ conf.title }}</strong> - {{ conf.date }} ({{ conf.place }})</span>
+              <a [routerLink]="['/conferences', conf.id]">Voir détails</a>
+            </li>
+          }
+        </ul>
+      }
+    </div>
   </section>
+
+  <aside class="profile-sidebar">
+    <app-friends></app-friends>
+    <app-notifications></app-notifications>
+  </aside>
+</div>
