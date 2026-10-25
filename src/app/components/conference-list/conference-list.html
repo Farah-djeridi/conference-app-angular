@@ -1,48 +1,49 @@
-@if (conferences.length === 0) {
-
-    <p>Aucune conférence disponible.</p>
-  
-  } @else {
-  
-    @for (conference of conferences; track conference.title) {
-  
+@if (conferenceService.conferences().length === 0) {
+  <p>Aucune conférence disponible.</p>
+} @else {
+  <div class="conference-grid">
+    @for (conference of conferenceService.conferences(); track conference.title) {
       @if (isUpcoming(conference.date)) {
-  
-        <div class="conference">
-  
+        @let places = conference.maxParticipants - conference.nbParticipants;
+        @let booked = bookingService.isBooked(conference.title);
+
+        <div class="conference-card" (click)="selectConference(conference)">
           <h2>{{ conference.title | uppercase }}</h2>
-  
           <p>{{ conference.description }}</p>
-  
-          <p>
-            Date :
-            {{ conference.date | date:'dd/MM/yyyy' }}
-          </p>
-  
-          <p>
-            Lieu :
-            {{ conference.place }}
-          </p>
-  
-          <p>
-            Places disponibles :
-            {{ conference.maxParticipants - conference.nbParticipants }}
-          </p>
-  
-          @let places = conference.maxParticipants - conference.nbParticipants;
-            <button
+          <p><strong>Date :</strong> {{ conference.date | date:'dd/MM/yyyy' }}</p>
+          <p><strong>Lieu :</strong> {{ conference.place }}</p>
+          <p><strong>Places disponibles :</strong> {{ places }}</p>
+
+          <div class="card-actions">
+            @if (booked) {
+              <span class="status-booked">✔ Déjà inscrit</span>
+              <button
+                type="button"
+                class="btn-cancel"
+                (click)="cancel(conference.title, $event)">
+                Annuler
+              </button>
+            } @else {
+              <button
+                type="button"
+                class="btn-book"
                 [class.green]="places >= 10"
                 [class.orange]="places > 0 && places < 10"
-                [class.red]="places === 0">
-
-                S'inscrire
-
+                [class.red]="places === 0"
+                [disabled]="places === 0"
+                (click)="book(conference, $event)">
+                {{ places === 0 ? 'Complet' : "S'inscrire" }}
+              </button>
+            }
+            <button
+              type="button"
+              class="btn-detail"
+              (click)="selectConference(conference)">
+              Voir détails
             </button>
-  
+          </div>
         </div>
-  
       }
-  
     }
-  
-  }
+  </div>
+}

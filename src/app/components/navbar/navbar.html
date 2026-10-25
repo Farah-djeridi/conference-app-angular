@@ -1,5 +1,12 @@
-<nav>
+<nav class="navbar">
+  <div class="nav-links">
     <a href="#">Accueil</a>
     <a href="#">Conférences</a>
     <a href="#">Profil</a>
-  </nav>
+  </div>
+  <div class="nav-bookings">
+    <span class="badge">
+      🎫 Réservations : <strong>{{ bookingService.bookedCount() }}</strong>
+    </span>
+  </div>
+</nav>

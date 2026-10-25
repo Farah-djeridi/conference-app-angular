@@ -1,54 +1,40 @@
-import { Component ,EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { UpperCasePipe, DatePipe } from '@angular/common';
-
-interface Conference {
-  title: string;
-  description: string;
-  date: string;
-  place: string;
-  maxParticipants: number;
-  nbParticipants: number;
-}
-
-
+import { Conference } from '../../models/conference.model';
+import { ConferenceService } from '../../services/conference.service';
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-conference-list',
   imports: [UpperCasePipe, DatePipe],
   templateUrl: './conference-list.html',
-  styleUrl: './conference-list.css'
+  styleUrl: './conference-list.css',
 })
 export class ConferenceList {
-
-  conferences: Conference[] = [
-    {
-      title: 'Angular 21',
-      description: 'Découvrir Angular 21',
-      date: '2026-10-10',
-      place: 'Tunis',
-      maxParticipants: 100,
-      nbParticipants: 70
-    },
-    {
-      title: 'Développement Web',
-      description: 'Les nouvelles technologies web',
-      date: '2026-10-15',
-      place: 'Sousse',
-      maxParticipants: 50,
-      nbParticipants: 45
-    }
-  ];
-
-
-  selectConference(conference: Conference) {
-    this.conferenceSelected.emit(conference);
-  }
-  
-  isUpcoming(date: string): boolean {
-    return new Date(date) >= new Date();
-  }
+  // Injection moderne via inject()
+  readonly conferenceService = inject(ConferenceService);
+  readonly bookingService = inject(BookingService);
 
   @Output()
-conferenceSelected = new EventEmitter<Conference>();
+  conferenceSelected = new EventEmitter<Conference>();
 
+  selectConference(conference: Conference): void {
+    this.conferenceSelected.emit(conference);
+  }
+
+  isUpcoming(date: string): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return new Date(date) >= today;
+  }
+
+  book(conference: Conference, event?: Event): void {
+    event?.stopPropagation();
+    this.bookingService.bookConference(conference);
+  }
+
+  cancel(conferenceTitle: string, event?: Event): void {
+    event?.stopPropagation();
+    this.bookingService.cancelBooking(conferenceTitle);
+  }
 }
