@@ -1,0 +1,144 @@
+.form-container {
+  max-width: 650px;
+  margin: 1.5rem auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+h2 {
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+.status-banner {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.status-banner.valid {
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.status-banner.invalid {
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.char-counter {
+  font-size: 0.8rem;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.char-counter.valid-counter {
+  color: #16a34a;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+input.is-invalid, textarea.is-invalid, select.is-invalid {
+  border-color: #ef4444;
+}
+
+.error-msg {
+  color: #dc2626;
+  font-size: 0.82rem;
+  margin-top: 0.35rem;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-submit {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-submit:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.65rem 1rem;
+}
+
+.btn-cancel:hover {
+  color: #0f172a;
+}

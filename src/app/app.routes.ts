@@ -18,6 +18,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/conference-list/conference-list').then((m) => m.ConferenceList),
   },
+  // Formulaire d'ajout d'une conférence (Reactive Form & Signals)
+  {
+    path: 'conferences/add',
+    loadComponent: () =>
+      import('./components/add-conference/add-conference').then(
+        (m) => m.AddConferenceComponent
+      ),
+  },
   // Route paramétrée dynamique :id avec Signal Inputs (Prosit 3 & 4)
   {
     path: 'conferences/:id',

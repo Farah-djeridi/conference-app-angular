@@ -1,3 +1,8 @@
+<div class="list-header">
+  <h2>Catalogue des Conférences ({{ conferenceService.upcomingConferences().length }})</h2>
+  <a routerLink="/conferences/add" class="btn-add">➕ Proposer une conférence</a>
+</div>
+
 @if (conferenceService.conferences().length === 0) {
   <p>Aucune conférence disponible.</p>
 } @else {
@@ -8,9 +13,13 @@
         @let booked = bookingService.isBooked(conference.title);
 
         <div class="conference-card" (click)="selectConference(conference)">
+          <div class="card-top">
+            <span class="category-badge">{{ conference.category || 'Tech' }}</span>
+            <span class="date-badge">{{ conference.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+
           <h2>{{ conference.title | uppercase }}</h2>
           <p>{{ conference.description }}</p>
-          <p><strong>Date :</strong> {{ conference.date | date:'dd/MM/yyyy' }}</p>
           <p><strong>Lieu :</strong> {{ conference.place }}</p>
           <p><strong>Places disponibles :</strong> {{ places }}</p>
 

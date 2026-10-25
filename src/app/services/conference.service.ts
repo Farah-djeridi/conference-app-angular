@@ -10,6 +10,7 @@ export class ConferenceService {
       id: 'conf-1',
       title: 'Angular 21',
       description: 'Découvrir Angular 21 et les Signals réactifs',
+      category: 'Web',
       date: '2026-11-10',
       place: 'Tunis',
       maxParticipants: 100,
@@ -19,6 +20,7 @@ export class ConferenceService {
       id: 'conf-2',
       title: 'Développement Web Moderne',
       description: 'Les nouvelles technologies web et le SSR',
+      category: 'Web',
       date: '2026-11-15',
       place: 'Sousse',
       maxParticipants: 50,
@@ -28,6 +30,7 @@ export class ConferenceService {
       id: 'conf-3',
       title: 'Architecture Micro-Frontend',
       description: 'Modularité et scalabilité des grandes applications',
+      category: 'Architecture',
       date: '2026-12-01',
       place: 'Sfax',
       maxParticipants: 30,
@@ -49,6 +52,19 @@ export class ConferenceService {
   getConferenceById(id?: string | null): Conference | undefined {
     if (!id) return undefined;
     return this.conferencesSignal().find((c) => c.id === id);
+  }
+
+  /**
+   * Ajoute une nouvelle conférence au catalogue
+   */
+  addConference(confData: Omit<Conference, 'id' | 'nbParticipants'>): Conference {
+    const newConf: Conference = {
+      ...confData,
+      id: `conf-${Date.now()}`,
+      nbParticipants: 0,
+    };
+    this.conferencesSignal.update((list) => [newConf, ...list]);
+    return newConf;
   }
 
   /**

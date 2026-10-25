@@ -17,6 +17,22 @@ describe('ConferenceService', () => {
     expect(service.conferences().length).toBeGreaterThan(0);
   });
 
+  it('should add a conference', () => {
+    const initialCount = service.conferences().length;
+    const newConf = service.addConference({
+      title: 'TypeScript 5.9',
+      description: 'Découverte des nouvelles syntaxes',
+      category: 'Langages',
+      date: '2026-11-20',
+      place: 'Tunis',
+      maxParticipants: 60,
+    });
+
+    expect(newConf.id).toBeDefined();
+    expect(newConf.nbParticipants).toBe(0);
+    expect(service.conferences().length).toBe(initialCount + 1);
+  });
+
   it('should reserve a seat and increment nbParticipants', () => {
     const initialConf = service.conferences().find((c) => c.title === 'Angular 21');
     expect(initialConf).toBeDefined();

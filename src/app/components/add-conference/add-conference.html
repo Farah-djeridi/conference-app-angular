@@ -1,0 +1,158 @@
+<div class="form-container">
+  <h2>➕ Ajouter une nouvelle conférence</h2>
+  <p class="subtitle">Remplissez les informations ci-dessous pour planifier une conférence au catalogue.</p>
+
+  <!-- Indicateurs réactifs en temps réel grâce aux Signals (Prosit 3) -->
+  <div class="status-banner" [class.valid]="isFormValid()" [class.invalid]="!isFormValid()">
+    <span>
+      État du formulaire :
+      <strong>{{ isFormValid() ? 'Valide ✅' : 'Incomplet / Erreurs ⚠️' }}</strong>
+    </span>
+  </div>
+
+  <form [formGroup]="conferenceForm" (ngSubmit)="onSubmit()">
+    <!-- Titre -->
+    <div class="form-group">
+      <label for="title">Titre de la conférence *</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Ex: Architecture Angular 21 et Signals"
+        [class.is-invalid]="title?.touched && title?.invalid"
+      />
+      @if (title?.touched && title?.invalid) {
+        <div class="error-msg">
+          @if (title?.hasError('required')) {
+            <span>Le titre est obligatoire.</span>
+          }
+          @if (title?.hasError('minlength')) {
+            <span>Le titre doit comporter au moins 5 caractères.</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Catégorie -->
+    <div class="form-group">
+      <label for="category">Catégorie *</label>
+      <select id="category" formControlName="category">
+        <option value="Web">Web & Frontend</option>
+        <option value="Cloud">Cloud & DevOps</option>
+        <option value="IA">Intelligence Artificielle</option>
+        <option value="Sécurité">Cybersécurité</option>
+        <option value="Architecture">Architecture logicielle</option>
+      </select>
+    </div>
+
+    <!-- Description avec compteur de caractères en temps réel -->
+    <div class="form-group">
+      <div class="label-row">
+        <label for="description">Description *</label>
+        <span class="char-counter" [class.valid-counter]="charCount() >= 15">
+          {{ charCount() }} caractères (min 15)
+        </span>
+      </div>
+      <textarea
+        id="description"
+        rows="4"
+        formControlName="description"
+        placeholder="Détaillez le sujet et les objectifs de la conférence..."
+        [class.is-invalid]="description?.touched && description?.invalid"
+      ></textarea>
+      @if (description?.touched && description?.invalid) {
+        <div class="error-msg">
+          @if (description?.hasError('required')) {
+            <span>La description est obligatoire.</span>
+          }
+          @if (description?.hasError('minlength')) {
+            <span>La description doit comporter au moins 15 caractères.</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Lieu & Date (en deux colonnes) -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="place">Lieu *</label>
+        <input
+          id="place"
+          type="text"
+          formControlName="place"
+          placeholder="Ex: Tunis, Salle Amphithéâtre"
+          [class.is-invalid]="place?.touched && place?.invalid"
+        />
+        @if (place?.touched && place?.invalid) {
+          <div class="error-msg">
+            @if (place?.hasError('required')) {
+              <span>Le lieu est obligatoire.</span>
+            }
+            @if (place?.hasError('minlength')) {
+              <span>Le nom du lieu doit comporter au moins 3 caractères.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="date">Date de l'événement *</label>
+        <input
+          id="date"
+          type="date"
+          formControlName="date"
+          [class.is-invalid]="date?.touched && date?.invalid"
+        />
+        @if (date?.touched && date?.invalid) {
+          <div class="error-msg">
+            @if (date?.hasError('required')) {
+              <span>La date est obligatoire.</span>
+            }
+            @if (date?.hasError('pastDate')) {
+              <span>La date de la conférence doit être future.</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Nombre max de participants -->
+    <div class="form-group">
+      <label for="maxParticipants">Nombre maximal de participants *</label>
+      <input
+        id="maxParticipants"
+        type="number"
+        formControlName="maxParticipants"
+        min="10"
+        max="2000"
+        [class.is-invalid]="maxParticipants?.touched && maxParticipants?.invalid"
+      />
+      @if (maxParticipants?.touched && maxParticipants?.invalid) {
+        <div class="error-msg">
+          @if (maxParticipants?.hasError('required')) {
+            <span>Veuillez renseigner le nombre de participants.</span>
+          }
+          @if (maxParticipants?.hasError('min')) {
+            <span>La capacité minimale est de 10 personnes.</span>
+          }
+          @if (maxParticipants?.hasError('max')) {
+            <span>La capacité maximale ne peut dépasser 2000 personnes.</span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="!isFormValid()"
+      >
+        💾 Enregistrer la conférence
+      </button>
+
+      <a routerLink="/conferences" class="btn-cancel">Annuler</a>
+    </div>
+  </form>
+</div>
